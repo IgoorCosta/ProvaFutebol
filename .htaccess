@@ -1,0 +1,26 @@
+Options -Indexes
+
+ErrorDocument 404 /404
+
+Redirect 301 /index.html /index.php
+Redirect 301 /index /index.php
+
+<FilesMatch "\.env$">
+    Deny from all
+</FilesMatch>
+
+Options +MultiViews
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^([^\.]+)$ $1.php [NC,L]
+
+<filesMatch "\.(?i:html|htm|)$">
+    <ifModule mod_headers.c>
+   	FileETag None
+    	Header unset ETag
+    	Header set Cache-Control "max-age=0, no-cache, no-store, must-revalidate"
+    	Header set Pragma "no-cache"
+    	Header set Expires "Wed, 11 Jan 1984 05:00:00 GMT"
+   </ifModule>
+</filesMatch>
